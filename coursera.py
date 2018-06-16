@@ -6,6 +6,7 @@ from lxml import etree
 import requests
 from requests import ConnectionError
 from bs4 import BeautifulSoup
+from openpyxl import Workbook
 
 
 def execute_get_request(url):
@@ -70,6 +71,36 @@ def get_coursera_courses_info(courses_urls):
     return coursera_courses_info
 
 
+def add_course_info(excel_worksheet, course_info):
+    excel_worksheet.append(
+        ['N/A' if item is None else item for item in course_info],
+    )
+
+
+def save_excel_workbook(excel_workbook, xlsx_filepath):
+    try:
+        excel_workbook.save(xlsx_filepath)
+        return True
+    except PermissionError:
+        return False
+
+
+def save_courses_info_to_xlsx(xlsx_filepath, courses_info):
+    excel_workbook = Workbook()
+    excel_worksheet = excel_workbook.active
+
+    excel_worksheet.title = 'Info About Coursera Courses'
+
+    excel_worksheet.append(
+        ('Title', 'Language', 'Starts', 'Weeks', 'Average Rating', 'URL'),
+    )
+
+    for course_info in courses_info:
+        add_course_info(excel_worksheet, course_info)
+
+    return save_excel_workbook(excel_workbook, xlsx_filepath)
+
+
 def parse_command_line_arguments():
     parser = argparse.ArgumentParser()
 
@@ -110,6 +141,13 @@ def main():
 
     if coursera_courses_info is None:
         sys.exit('Could not get info about Coursera courses')
+
+    if not save_courses_info_to_xlsx(output_filepath, coursera_courses_info):
+        sys.exit('Could not save file to given directory. Permission denied.')
+
+    print('Info about Coursera courses successfully saved to {}'.format(
+        output_filepath,
+    ))
 
 
 if __name__ == '__main__':
