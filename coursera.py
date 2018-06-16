@@ -78,7 +78,7 @@ def get_coursera_courses_info(courses_urls):
 
 def add_course_info(excel_worksheet, course_info):
     excel_worksheet.append(
-        ['N/A' if item is None else item for item in course_info],
+        ['N/A' if element is None else element for element in course_info],
     )
 
 
