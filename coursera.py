@@ -50,11 +50,11 @@ def fetch_course_info(course_page_content):
     weeks_count = len(soup.find_all('div', class_='week'))
     average_rating = get_tag_text(tag=soup.find(class_='ratings-text'))
 
-    return title, language, start_date, weeks_count, average_rating
+    return [title, language, start_date, weeks_count, average_rating]
 
 
 def get_coursera_courses_info(courses_urls):
-    coursera_courses_info = {}
+    coursera_courses_info = []
 
     for course_url in courses_urls:
         course_page_content = execute_get_request(course_url)
@@ -63,8 +63,9 @@ def get_coursera_courses_info(courses_urls):
             return None
 
         course_info = fetch_course_info(course_page_content)
+        course_info.append(course_url)
 
-        coursera_courses_info[course_url] = course_info
+        coursera_courses_info.append(course_info)
 
     return coursera_courses_info
 
