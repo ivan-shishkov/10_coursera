@@ -1,6 +1,6 @@
 # Coursera Dump
 
-[TODO. There will be project description]
+This script allows to get info about educational courses (title, language, start date, number of weeks, average rating, URL) from [Coursera.org](https://www.coursera.org/) and save it to the XLSX file.
 
 # Project Goals
 
