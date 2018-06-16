@@ -28,6 +28,16 @@ optional arguments:
 
 ```
 
+Example of script launch on Linux:
+
+```bash
+
+$ python3 coursera.py coursera_courses_50.xlsx --count 50
+Getting info about Coursera courses...
+Info about Coursera courses successfully saved to coursera_courses_50.xlsx
+
+```
+
 # Project Goals
 
 The code is written for educational purposes. Training course for web-developers - [DEVMAN.org](https://devman.org)
