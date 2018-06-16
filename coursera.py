@@ -17,15 +17,17 @@ def execute_get_request(url):
         return None
 
 
-def get_urls_from_xml_content(xml_content, random_urls_count):
-    urlset = etree.fromstring(xml_content)
-
-    urls = [loc.text for url in urlset for loc in url]
-
+def get_random_urls(urls, random_urls_count):
     if len(urls) > random_urls_count:
         return random.sample(urls, random_urls_count)
     else:
         return urls
+
+
+def get_urls_from_xml_content(xml_content):
+    urlset = etree.fromstring(xml_content)
+
+    return [loc.text for url in urlset for loc in url]
 
 
 def get_coursera_courses_urls(random_urls_count):
@@ -35,7 +37,10 @@ def get_coursera_courses_urls(random_urls_count):
     if xml_content is None:
         return None
 
-    return get_urls_from_xml_content(xml_content, random_urls_count)
+    return get_random_urls(
+        urls=get_urls_from_xml_content(xml_content),
+        random_urls_count=random_urls_count,
+    )
 
 
 def get_tag_text(tag):
