@@ -56,7 +56,13 @@ def fetch_course_info(course_page_content):
     weeks_count = len(soup.find_all('div', class_='week'))
     average_rating = get_tag_text(tag=soup.find(class_='ratings-text'))
 
-    return [title, language, start_date, weeks_count, average_rating]
+    return {
+        'title': title,
+        'language': language,
+        'start_date': start_date,
+        'weeks_count': weeks_count,
+        'average_rating': average_rating,
+    }
 
 
 def get_coursera_courses_info(courses_urls):
@@ -69,7 +75,7 @@ def get_coursera_courses_info(courses_urls):
             return None
 
         course_info = fetch_course_info(course_page_content)
-        course_info.append(course_url)
+        course_info['url'] = course_url
 
         coursera_courses_info.append(course_info)
 
@@ -78,7 +84,14 @@ def get_coursera_courses_info(courses_urls):
 
 def add_course_info(excel_worksheet, course_info):
     excel_worksheet.append(
-        ['N/A' if element is None else element for element in course_info],
+        (
+            course_info['title'],
+            course_info['language'],
+            course_info['start_date'],
+            course_info['weeks_count'],
+            course_info['average_rating'],
+            course_info['url'],
+        ),
     )
 
 
