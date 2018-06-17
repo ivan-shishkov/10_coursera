@@ -110,8 +110,9 @@ def parse_command_line_arguments():
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
-        'output',
+        '--output',
         help='a xlsx file to save info about Coursera courses',
+        default='coursera_courses_info.xlsx',
         type=str,
     )
     parser.add_argument(
