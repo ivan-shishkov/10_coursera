@@ -93,7 +93,7 @@ def save_excel_workbook(excel_workbook, xlsx_filepath):
         return False
 
 
-def write_courses_info_to_excel_workbook(courses_info):
+def create_workbook_with_courses_info(courses_info):
     excel_workbook = Workbook()
     excel_worksheet = excel_workbook.active
 
@@ -159,7 +159,7 @@ def main():
         sys.exit('Could not get info about Coursera courses')
 
     if not save_excel_workbook(
-            excel_workbook=write_courses_info_to_excel_workbook(courses_info),
+            excel_workbook=create_workbook_with_courses_info(courses_info),
             xlsx_filepath=output_filepath):
         sys.exit('Could not save file to given directory. Permission denied.')
 
