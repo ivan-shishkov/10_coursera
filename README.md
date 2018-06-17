@@ -17,14 +17,12 @@ Usage:
 ```bash
 
 $ python3 coursera.py -h
-usage: coursera.py [-h] [--count COUNT] output
-
-positional arguments:
-  output         a xlsx file to save info about Coursera courses
+usage: coursera.py [-h] [--output OUTPUT] [--count COUNT]
 
 optional arguments:
-  -h, --help     show this help message and exit
-  --count COUNT  a count of randomly selected Coursera courses (default: 20)
+  -h, --help       show this help message and exit
+  --output OUTPUT  a xlsx file to save info about Coursera courses
+  --count COUNT    a count of randomly selected Coursera courses (default: 20)
 
 ```
 
