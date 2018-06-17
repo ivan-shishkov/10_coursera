@@ -90,7 +90,7 @@ def save_excel_workbook(excel_workbook, xlsx_filepath):
         return False
 
 
-def save_courses_info_to_xlsx(xlsx_filepath, courses_info):
+def write_courses_info_to_excel_workbook(courses_info):
     excel_workbook = Workbook()
     excel_worksheet = excel_workbook.active
 
@@ -103,7 +103,7 @@ def save_courses_info_to_xlsx(xlsx_filepath, courses_info):
     for course_info in courses_info:
         add_course_info(excel_worksheet, course_info)
 
-    return save_excel_workbook(excel_workbook, xlsx_filepath)
+    return excel_workbook
 
 
 def parse_command_line_arguments():
@@ -141,14 +141,16 @@ def main():
 
     print('Getting info about Coursera courses...')
 
-    coursera_courses_info = get_coursera_courses_info(
+    courses_info = get_coursera_courses_info(
         courses_urls=coursera_courses_urls,
     )
 
-    if coursera_courses_info is None:
+    if courses_info is None:
         sys.exit('Could not get info about Coursera courses')
 
-    if not save_courses_info_to_xlsx(output_filepath, coursera_courses_info):
+    if not save_excel_workbook(
+            excel_workbook=write_courses_info_to_excel_workbook(courses_info),
+            xlsx_filepath=output_filepath):
         sys.exit('Could not save file to given directory. Permission denied.')
 
     print('Info about Coursera courses successfully saved to {}'.format(
