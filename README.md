@@ -30,9 +30,9 @@ Example of script launch on Linux:
 
 ```bash
 
-$ python3 coursera.py coursera_courses_50.xlsx --count 50
+$ python3 coursera.py --count 100 --output coursera_courses_100.xlsx
 Getting info about Coursera courses...
-Info about Coursera courses successfully saved to coursera_courses_50.xlsx
+Info about Coursera courses successfully saved to coursera_courses_100.xlsx
 
 ```
 
