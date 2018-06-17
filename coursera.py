@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 from openpyxl import Workbook
 
 
-def execute_get_request(url):
+def fetch_content(url):
     try:
         response = requests.get(url)
         return response.content if response.ok else None
@@ -31,7 +31,7 @@ def get_urls_from_xml_content(xml_content):
 
 
 def get_coursera_courses_urls(random_urls_count):
-    xml_content = execute_get_request(
+    xml_content = fetch_content(
         url='https://www.coursera.org/sitemap~www~courses.xml',
     )
     if xml_content is None:
@@ -63,7 +63,7 @@ def get_coursera_courses_info(courses_urls):
     coursera_courses_info = []
 
     for course_url in courses_urls:
-        course_page_content = execute_get_request(course_url)
+        course_page_content = fetch_content(course_url)
 
         if course_page_content is None:
             return None
