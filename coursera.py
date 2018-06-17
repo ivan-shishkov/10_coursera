@@ -18,9 +18,6 @@ def fetch_content(url):
 
 
 def get_random_urls(urls, random_urls_count):
-    if urls is None:
-        return None
-
     if len(urls) > random_urls_count:
         return random.sample(urls, random_urls_count)
     else:
@@ -28,19 +25,12 @@ def get_random_urls(urls, random_urls_count):
 
 
 def get_urls_from_xml_content(xml_content):
-    urlset = etree.fromstring(xml_content)
-
-    return [loc.text for url in urlset for loc in url]
-
-
-def get_coursera_courses_urls():
-    xml_content = fetch_content(
-        url='https://www.coursera.org/sitemap~www~courses.xml',
-    )
     if xml_content is None:
         return None
 
-    return get_urls_from_xml_content(xml_content)
+    urlset = etree.fromstring(xml_content)
+
+    return [loc.text for url in urlset for loc in url]
 
 
 def get_tag_text(tag):
@@ -145,18 +135,24 @@ def main():
     output_filepath = command_line_arguments.output
     courses_count = command_line_arguments.count
 
-    courses_urls = get_random_urls(
-        urls=get_coursera_courses_urls(),
-        random_urls_count=courses_count,
+    courses_urls = get_urls_from_xml_content(
+        xml_content=fetch_content(
+            url='https://www.coursera.org/sitemap~www~courses.xml',
+        ),
     )
 
     if courses_urls is None:
         sys.exit('Could not get Coursera courses URLs')
 
+    random_selected_courses_urls = get_random_urls(
+        urls=courses_urls,
+        random_urls_count=courses_count,
+    )
+
     print('Getting info about Coursera courses...')
 
     courses_info = get_coursera_courses_info(
-        courses_urls=courses_urls,
+        courses_urls=random_selected_courses_urls,
     )
 
     if courses_info is None:
